@@ -3,15 +3,35 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
-  const { deploy } = hre.deployments;
+  const { deploy, log } = hre.deployments;
 
-  const deployedFHECounter = await deploy("FHECounter", {
+  const confidentialEth = await deploy("ConfidentialETH", {
     from: deployer,
     log: true,
   });
 
-  console.log(`FHECounter contract: `, deployedFHECounter.address);
+  const confidentialUsdt = await deploy("ConfidentialUSDT", {
+    from: deployer,
+    log: true,
+  });
+
+  const confidentialZama = await deploy("ConfidentialZama", {
+    from: deployer,
+    log: true,
+  });
+
+  const staking = await deploy("ConfidentialStaking", {
+    from: deployer,
+    args: [[confidentialEth.address, confidentialUsdt.address, confidentialZama.address]],
+    log: true,
+  });
+
+  log(`ConfidentialETH contract: ${confidentialEth.address}`);
+  log(`ConfidentialUSDT contract: ${confidentialUsdt.address}`);
+  log(`ConfidentialZama contract: ${confidentialZama.address}`);
+  log(`ConfidentialStaking contract: ${staking.address}`);
 };
+
 export default func;
-func.id = "deploy_fheCounter"; // id required to prevent reexecution
-func.tags = ["FHECounter"];
+func.id = "deploy_confidential_staking";
+func.tags = ["confidential-staking"];
