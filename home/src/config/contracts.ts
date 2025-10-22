@@ -1,9 +1,12 @@
 // Generated from deployments/sepolia artifacts
 // Do not edit manually.
 
-export const STAKING_CONTRACT = {
-  address: '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9',
-  abi: [
+export const STAKING_CONTRACT_ADDRESS = '0x3Ec966346248ad6eF34fbC3496Cc224CC45b73b4';
+export const CONFIDENTIAL_ETH_ADDRESS = '0x54D0C4D2e1D499760706AAb06C4846FC874e6165';
+export const CONFIDENTIAL_USDT_ADDRESS = '0x451Eb634EC4Ce3aB8E8D77e42B94571830350d51';
+export const CONFIDENTIAL_ZAMA_ADDRESS = '0xC5a798D151345729BfDbe157169ce3d4eCdff0e3';
+
+export const STAKING_CONTRACT_ABI = [
     {
       "inputs": [
         {
@@ -189,7 +192,11 @@ export const STAKING_CONTRACT = {
       "stateMutability": "nonpayable",
       "type": "function"
     }
-  ] as const,
+  ] as const;
+
+export const STAKING_CONTRACT = {
+  address: STAKING_CONTRACT_ADDRESS,
+  abi: STAKING_CONTRACT_ABI,
 } as const;
 
 export const TOKEN_CONTRACTS = [
