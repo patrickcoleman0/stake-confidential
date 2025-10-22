@@ -196,8 +196,30 @@ export function TokenStakeCard({
         durationDays,
       );
 
-      const decrypted = result[handle];
-      return decrypted ? BigInt(decrypted) : 0n;
+      const normalizedHandle = (() => {
+        if (typeof handle === 'string') {
+          const hex = handle.startsWith('0x') ? handle.slice(2) : handle;
+          return `0x${hex.toLowerCase()}`;
+        }
+        return null;
+      })();
+
+      if (!normalizedHandle) {
+        return 0n;
+      }
+
+      const decrypted = result[normalizedHandle];
+      if (decrypted === undefined) {
+        return 0n;
+      }
+
+      if (typeof decrypted === 'bigint') {
+        return decrypted;
+      }
+      if (typeof decrypted === 'boolean') {
+        return decrypted ? 1n : 0n;
+      }
+      return BigInt(decrypted);
     },
     [zamaInstance, signerPromise, userAddress],
   );
