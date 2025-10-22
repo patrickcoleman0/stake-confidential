@@ -1,0 +1,63 @@
+.staking-app {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f9fafb 0%, #eef2ff 100%);
+}
+
+.staking-main {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.staking-hero {
+  margin-bottom: 2rem;
+}
+
+.staking-title {
+  margin: 0;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.staking-subtitle {
+  margin: 0.75rem 0 0;
+  max-width: 48rem;
+  color: #4b5563;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.staking-alert {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.staking-alert.info {
+  background-color: #e0f2fe;
+  color: #0f172a;
+}
+
+.staking-alert.error {
+  background-color: #fee2e2;
+  color: #7f1d1d;
+}
+
+.token-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+@media (min-width: 1024px) {
+  .staking-main {
+    padding: 3.5rem 2rem 4rem;
+  }
+
+  .staking-title {
+    font-size: 2.5rem;
+  }
+}
