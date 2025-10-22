@@ -17,6 +17,7 @@ dotenv.config();
 
 const MNEMONIC: string = process.env.MNEMONIC ?? "test test test test test test test test test test test junk";
 const INFURA_API_KEY: string = process.env.INFURA_API_KEY ?? "";
+const DEPLOYER_PRIVATE_KEY: string = process.env.DEPLOYER_PRIVATE_KEY ?? "";
 
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
@@ -52,11 +53,7 @@ const config: HardhatUserConfig = {
       saveDeployments: true,
     },
     sepolia: {
-      accounts: {
-        mnemonic: MNEMONIC,
-        path: "m/44'/60'/0'/0/",
-        count: 10,
-      },
+      accounts: DEPLOYER_PRIVATE_KEY !== "" ? [DEPLOYER_PRIVATE_KEY] : [],
       chainId: 11155111,
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
       saveDeployments: true,
