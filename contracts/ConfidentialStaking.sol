@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 pragma solidity ^0.8.27;
 
-import {SepoliaConfig} from "@fhevm/solidity/config/ZamaConfig.sol";
+import {ZamaEthereumConfig} from "@fhevm/solidity/config/ZamaConfig.sol";
 import {FHE, ebool, euint64, externalEuint64} from "@fhevm/solidity/lib/FHE.sol";
-import {IConfidentialFungibleToken} from "new-confidential-contracts/interfaces/IConfidentialFungibleToken.sol";
-import {FHESafeMath} from "new-confidential-contracts/utils/FHESafeMath.sol";
+import {IERC7984} from "confidential-contracts-v91/contracts/interfaces/IERC7984.sol";
+import {FHESafeMath} from "confidential-contracts-v91/contracts/utils/FHESafeMath.sol";
 
-contract ConfidentialStaking is SepoliaConfig {
+contract ConfidentialStaking is ZamaEthereumConfig {
     mapping(address token => bool) private _supportedToken;
     address[] private _tokenList;
 
@@ -53,7 +53,7 @@ contract ConfidentialStaking is SepoliaConfig {
         euint64 amount = FHE.fromExternal(encryptedAmount, inputProof);
 
         FHE.allowTransient(amount, token);
-        euint64 transferred = IConfidentialFungibleToken(token).confidentialTransferFrom(msg.sender, address(this), amount);
+        euint64 transferred = IERC7984(token).confidentialTransferFrom(msg.sender, address(this), amount);
 
         (, euint64 updatedUserStake) = FHESafeMath.tryIncrease(_stakes[msg.sender][token], transferred);
         FHE.allowThis(updatedUserStake);
@@ -82,7 +82,7 @@ contract ConfidentialStaking is SepoliaConfig {
         FHE.allowTransient(userStake, token);
         FHE.allow(userStake, msg.sender);
 
-        euint64 transferred = IConfidentialFungibleToken(token).confidentialTransfer(msg.sender, userStake);
+        euint64 transferred = IERC7984(token).confidentialTransfer(msg.sender, userStake);
         FHE.allowThis(transferred);
         FHE.allow(transferred, msg.sender);
 
